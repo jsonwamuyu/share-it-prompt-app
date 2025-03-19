@@ -1,10 +1,13 @@
 {
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+  "name": "Tasks App",
+  "version": "1.0.0",
+  "description": "We'll use Node.js, Express, Apollo Server, and SQLite to handle tasks via GraphQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  }
+  "keywords": [],
+  "author": "",
+  
+  "license": "ISC"
 }
