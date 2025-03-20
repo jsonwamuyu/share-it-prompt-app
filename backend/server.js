@@ -30,13 +30,15 @@ const typeDefs = gql`
   type Query {
     getTasks: [Task]
     getCompletedTasks: [Task]
+    getIncompleteTasks: [Task]
   }
 `;
 
 const resolvers = {
   Query: {
-    getTasks: () =>  tasks,
-    getCompletedTasks: () =>  tasks.filter((task) => task.completed),
+    getTasks: () => tasks,
+    getCompletedTasks: () => tasks.filter((task) => task.completed),
+    getIncompleteTasks: () => tasks.filter((task) => !task.completed),
   },
 };
 
