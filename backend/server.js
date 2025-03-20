@@ -2,7 +2,6 @@
 // we need graphql-tools to create a schema from our type definitions(define data structure) and resolvers(functions to handle the queries and mutations)
 
 const express = require("express");
-const { graphql } = require("graphql");
 const { ApolloServer, gql } = require("apollo-server-express");
 
 const tasks = [
@@ -13,6 +12,7 @@ const tasks = [
   },
   { id: 2, text: "Learn GraphQL - a new thing to do", completed: true },
   { id: 3, text: "Learn TypeScript - also i love this", completed: false },
+  { id: 4, text: "Understand GraphQl", completed: true },
 ];
 
 const app = express();
@@ -21,23 +21,22 @@ const app = express();
 // type Query → Defines a getTasks query to fetch an array of Task objects.
 
 const typeDefs = gql`
-    type Task{
-    id:ID!
-    title:String!
-    completed:Boolean!
-    }
+  type Task {
+    id: ID!
+    text: String!
+    completed: Boolean!
+  }
 
-    type Query{
-        getTasks:[Task]
-    }
-
+  type Query {
+    getTasks: [Task]
+    getCompletedTasks: [Task]
+  }
 `;
 
 const resolvers = {
   Query: {
-    getTasks: () => {
-      return tasks;
-    },
+    getTasks: () =>  tasks,
+    getCompletedTasks: () =>  tasks.filter((task) => task.completed),
   },
 };
 
@@ -51,6 +50,5 @@ async function startServer() {
     console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
   );
 }
-
 
 startServer();
