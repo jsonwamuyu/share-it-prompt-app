@@ -13,12 +13,13 @@ const tasks = [
   { id: 2, text: "Learn GraphQL - a new thing to do", completed: true },
   { id: 3, text: "Learn TypeScript - also i love this", completed: false },
   { id: 4, text: "Understand GraphQl", completed: true },
+  { id: 5, text: "Physical fitness today (5pm) ", completed: false },
 ];
 
 const app = express();
 
 // type Task → Defines a Task object with id, text, and completed fields.
-// type Query → Defines a getTasks query to fetch an array of Task objects.
+// type Query → This is where you define queries for Task objects.
 
 const typeDefs = gql`
   type Task {
@@ -31,6 +32,8 @@ const typeDefs = gql`
     getTasks: [Task]
     getCompletedTasks: [Task]
     getIncompleteTasks: [Task]
+    searchTask(keyword: String!): [Task]
+    taskDateCreated: [Task]
   }
 `;
 
@@ -39,6 +42,11 @@ const resolvers = {
     getTasks: () => tasks,
     getCompletedTasks: () => tasks.filter((task) => task.completed),
     getIncompleteTasks: () => tasks.filter((task) => !task.completed),
+    searchTask: (_, { keyword }) =>
+      tasks.filter((task) =>
+        task.text.toLowerCase().includes(keyword.toLowerCase())
+      ),
+    taskDateCreated: () => tasks.filter((task) => task.created_at),
   },
 };
 
