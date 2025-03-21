@@ -9,11 +9,32 @@ const tasks = [
     id: 1,
     text: "Learn React.js - This is really awesome, we make things happen.",
     completed: false,
+    created_at: "2025-02-22T06:08:11Z",
   },
-  { id: 2, text: "Learn GraphQL - a new thing to do", completed: true },
-  { id: 3, text: "Learn TypeScript - also i love this", completed: false },
-  { id: 4, text: "Understand GraphQl", completed: true },
-  { id: 5, text: "Physical fitness today (5pm) ", completed: false },
+  {
+    id: 2,
+    text: "Learn GraphQL - a new thing to do",
+    completed: true,
+    created_at: "2025-02-22T02:98:56Z",
+  },
+  {
+    id: 3,
+    text: "Learn TypeScript - also i love this",
+    completed: false,
+    created_at: "2025-02-22T07:08:56Z",
+  },
+  {
+    id: 4,
+    text: "Understand GraphQl",
+    completed: true,
+    created_at: "2025-02-22T11:07:07Z",
+  },
+  {
+    id: 5,
+    text: "Physical fitness today (5pm) ",
+    completed: false,
+    created_at: "2025-02-22T10:00:00Z",
+  },
 ];
 
 const app = express();
@@ -26,6 +47,7 @@ const typeDefs = gql`
     id: ID!
     text: String!
     completed: Boolean!
+    created_at: String!
   }
 
   type Query {
@@ -33,7 +55,6 @@ const typeDefs = gql`
     getCompletedTasks: [Task]
     getIncompleteTasks: [Task]
     searchTask(keyword: String!): [Task]
-    taskDateCreated: [Task]
   }
 `;
 
@@ -46,7 +67,6 @@ const resolvers = {
       tasks.filter((task) =>
         task.text.toLowerCase().includes(keyword.toLowerCase())
       ),
-    taskDateCreated: () => tasks.filter((task) => task.created_at),
   },
 };
 
