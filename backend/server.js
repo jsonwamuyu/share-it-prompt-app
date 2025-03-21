@@ -56,6 +56,11 @@ const typeDefs = gql`
     getIncompleteTasks: [Task]
     searchTask(keyword: String!): [Task]
   }
+  type mutation {
+    addTask(text: String!): Task
+    completeTask(id: ID!): Task
+    removeTask(id: ID!): Task
+  }
 `;
 
 const resolvers = {
