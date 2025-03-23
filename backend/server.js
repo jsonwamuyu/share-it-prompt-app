@@ -39,6 +39,8 @@ const tasks = [
 
 const app = express();
 
+// Define how our data should look like, different queries that are gonna be used to get the data, and different mutations that gonna alter the data
+
 // type Task → Defines a Task object with id, text, and completed fields.
 // type Query → This is where you define queries for Task objects.
 
@@ -49,6 +51,12 @@ const typeDefs = gql`
     completed: Boolean!
     created_at: String!
   }
+    
+  type User {
+    id:ID!
+    fullname: String:
+    email:String!
+  }
 
   type Query {
     getTasks: [Task]
@@ -56,8 +64,10 @@ const typeDefs = gql`
     getIncompleteTasks: [Task]
     searchTask(keyword: String!): [Task]
   }
+
   type mutation {
     addTask(text: String!): Task
+    updateTask():Task
     completeTask(id: ID!): Task
     removeTask(id: ID!): Task
   }
