@@ -39,51 +39,56 @@ const tasks = [
 
 const app = express();
 
+
+
 // Define how our data should look like, different queries that are gonna be used to get the data, and different mutations that gonna alter the data
 
 // type Task → Defines a Task object with id, text, and completed fields.
 // type Query → This is where you define queries for Task objects.
 
-const typeDefs = gql`
-  type Task {
-    id: ID!
-    text: String!
-    completed: Boolean!
-    created_at: String!
-  }
-    
-  type User {
-    id:ID!
-    fullname: String:
-    email:String!
-  }
 
-  type Query {
-    getTasks: [Task]
-    getCompletedTasks: [Task]
-    getIncompleteTasks: [Task]
-    searchTask(keyword: String!): [Task]
-  }
+// const typeDefs = gql`
 
-  type mutation {
-    addTask(text: String!): Task
-    updateTask():Task
-    completeTask(id: ID!): Task
-    removeTask(id: ID!): Task
-  }
-`;
+//   type Task {
+//     id: ID!
+//     text: String!
+//     completed: Boolean!
+//     created_at: String!
+//   }
 
-const resolvers = {
-  Query: {
-    getTasks: () => tasks,
-    getCompletedTasks: () => tasks.filter((task) => task.completed),
-    getIncompleteTasks: () => tasks.filter((task) => !task.completed),
-    searchTask: (_, { keyword }) =>
-      tasks.filter((task) =>
-        task.text.toLowerCase().includes(keyword.toLowerCase())
-      ),
-  },
-};
+//   type User {
+//     id:ID!
+//     fullname: String!
+//     email:String!
+//   }
+
+//   type Query {
+//     getTasks: [Task]
+//     getCompletedTasks: [Task]
+//     getIncompleteTasks: [Task]
+//     searchTask(keyword: String!): [Task]
+//   }
+
+//   type Mutation {
+//     addTask(text: String!): Task
+//     updateTask(id:ID!):Task
+//     completeTask(id: ID!): Task
+//     removeTask(id: ID!): Task
+//   }
+// `;
+
+// const resolvers = {
+//   Query: {
+//     getTasks: () => tasks,
+//     getCompletedTasks: () => tasks.filter((task) => task.completed),
+//     getIncompleteTasks: () => tasks.filter((task) => !task.completed),
+//     searchTask: (_, { keyword }) =>
+//       tasks.filter((task) =>
+//         task.text.toLowerCase().includes(keyword.toLowerCase())
+//       ),
+//   },
+//   Mutation:{}
+// };
 
 // Connect Apollo Server to Express
 
