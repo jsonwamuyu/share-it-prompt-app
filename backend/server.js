@@ -86,8 +86,8 @@ const typeDefs = gql`
   }
   
   type Mutations{
-  
-  
+    createBlog(title:String!, description:String!, author:String!, ratings):Blog
+    deleteBlog(id:ID!):Blog
   }  
 
   type Blog{
