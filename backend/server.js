@@ -37,15 +37,77 @@ const tasks = [
   },
 ];
 
+const blogs = [
+  {
+    id: 1,
+    title: "Paying school fees",
+    description: "This is the best way to perform your duty as a parent",
+    author: "John Snow",
+    ratings: 4,
+  },
+  {
+    id: 2,
+    title: "Quite smoking today",
+    description: "This might be a cliche but quite smoking is possible.",
+    author: "Rachael Dunning ",
+    ratings: 5,
+  },
+  {
+    id: 3,
+    title: "Meditation is the way",
+    description:
+      "You want to have calmness in you? Practice meditation today and see what happens",
+    author: "Peter Smiles",
+    ratings: 4,
+  },
+  {
+    id: 4,
+    title: "Playing football",
+    description: "Playing football makes you look and feel sharp",
+    author: "Mary Ling",
+    ratings: 3,
+  },
+  {
+    id: 5,
+    title: "Pain of a loss",
+    description:
+      "Loosing something or some one is not a cup of tea. It comes with a lot challenges",
+    author: "Nelson Mike",
+    ratings: 5,
+  },
+];
+
 const app = express();
 
+const typeDefs = gql`
+  type Query{
+  getAllBlogs:[Blog]
+  getBlogById(id:ID!):Blog
+  }
+  
+  type Mutations{
+  
+  
+  }  
 
+  type Blog{
+  id:ID!
+  title:String!
+  description:String!
+  author:String!
+  ratings:Number
+  }
+
+`;
+const resolvers = {
+  Query: {},
+  Mutation: {},
+};
 
 // Define how our data should look like, different queries that are gonna be used to get the data, and different mutations that gonna alter the data
 
 // type Task → Defines a Task object with id, text, and completed fields.
 // type Query → This is where you define queries for Task objects.
-
 
 // const typeDefs = gql`
 
@@ -66,7 +128,7 @@ const app = express();
 //     getTasks: [Task]
 //     getCompletedTasks: [Task]
 //     getIncompleteTasks: [Task]
-//     searchTask(keyword: String!): [Task]
+//     searchTask(keyword: String!): Task
 //   }
 
 //   type Mutation {
