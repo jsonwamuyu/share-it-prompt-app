@@ -101,7 +101,6 @@ const typeDefs = gql`
     createBlog(title:String!, description:String!, author:String!, ratings:Int):Blog
     deleteBlog(id:ID!):Blog
   }  
-
 `;
 
 const resolvers = {
