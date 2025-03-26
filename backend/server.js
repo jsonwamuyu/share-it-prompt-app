@@ -80,28 +80,63 @@ const blogs = [
 const app = express();
 
 const typeDefs = gql`
+  type Blog{
+    id:ID!
+    title:String!
+    description:String!
+    author:String!
+    ratings:Int
+  }
+
+  // Query -> All fields and data definition you are going to have in the API to fetch data eg. getAllUsers which returns a list of all users in the database
+  // Mutation -> alter data
+  // Resolver -> functions to execute these queries and mutations
+
   type Query{
   getAllBlogs:[Blog]
   getBlogById(id:ID!):Blog
   }
   
-  type Mutations{
-    createBlog(title:String!, description:String!, author:String!, ratings):Blog
+  type Mutation {
+    createBlog(title:String!, description:String!, author:String!, ratings:Int):Blog
     deleteBlog(id:ID!):Blog
   }  
 
-  type Blog{
-  id:ID!
-  title:String!
-  description:String!
-  author:String!
-  ratings:Number
-  }
-
 `;
+
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: {
+    getAllBlogs: () => {
+      // Make a call to the database to get all the blogs i.e SELECT * FROM blogs
+      return blogs;
+    },
+    getBlogById: (parent, args) => {
+      const id = args.id;
+      return blogs.find((blog) => blog.id === id);
+    },
+  },
+
+  Mutation: {
+    deleteBlog: (parent, args) => {
+      const id = args.id;
+      return blogs.filter((blog) => {
+        return blog.id !== id;
+      });
+    },
+
+    createBlog: (parent, args) => {
+      // Destructure the args
+      const { title, description, author, ratings } = args;
+      const newBlog = {
+        id: (blogs.length + 1).toString(),
+        title,
+        description,
+        author,
+        ratings,
+      };
+      blogs.push(newBlog);
+    },
+  },
 };
 
 // Define how our data should look like, different queries that are gonna be used to get the data, and different mutations that gonna alter the data
