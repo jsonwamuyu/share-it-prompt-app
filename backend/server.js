@@ -111,16 +111,19 @@ const resolvers = {
     },
     getBlogById: (parent, args) => {
       const id = args.id;
-      return blogs.find((blog) => blog.id === id);
+      return blogs.find((blog) => blog.id === Number(id));
     },
   },
 
   Mutation: {
     deleteBlog: (parent, args) => {
-      const id = args.id;
-      return blogs.filter((blog) => {
-        return blog.id !== id;
-      });
+      const id = Number(args.id);
+      const blogIndex = blogs.findIndex((blog) => blog.id === id);
+      if (blogIndex === -1) {
+        throw new Error("Blog not found");
+      }
+      const deletedBlog = blogs.splice(blogIndex, 1);
+      return deletedBlog[0];
     },
 
     createBlog: (parent, args) => {
@@ -128,12 +131,10 @@ const resolvers = {
       const { title, description, author, ratings } = args;
       const newBlog = {
         id: (blogs.length + 1).toString(),
-        title,
-        description,
-        author,
-        ratings,
+        ...args,
       };
       blogs.push(newBlog);
+      return newBlog;
     },
   },
 };
