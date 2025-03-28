@@ -79,113 +79,113 @@ const blogs = [
 
 const app = express();
 
-const typeDefs = gql`
-  type Blog{
-    id:ID!
-    title:String!
-    description:String!
-    author:String!
-    ratings:Int
-  }
+// const typeDefs = gql`
+//   type Blog{
+//     id:ID!
+//     title:String!
+//     description:String!
+//     author:String!
+//     ratings:Int
+//   }
 
-  // Query -> All fields and data definition you are going to have in the API to fetch data eg. getAllUsers which returns a list of all users in the database
-  // Mutation -> alter data
-  // Resolver -> functions to execute these queries and mutations
+//   // Query -> All fields and data definition you are going to have in the API to fetch data eg. getAllUsers which returns a list of all users in the database
+//   // Mutation -> alter data
+//   // Resolver -> functions to execute these queries and mutations
 
-  type Query{
-  getAllBlogs:[Blog]
-  getBlogById(id:ID!):Blog
-  }
+//   type Query{
+//   getAllBlogs:[Blog]
+//   getBlogById(id:ID!):Blog
+//   }
   
-  type Mutation {
-    createBlog(title:String!, description:String!, author:String!, ratings:Int):Blog
-    deleteBlog(id:ID!):Blog
-  }  
-`;
+//   type Mutation {
+//     createBlog(title:String!, description:String!, author:String!, ratings:Int):Blog
+//     deleteBlog(id:ID!):Blog
+//   }  
+// `;
 
-const resolvers = {
-  Query: {
-    getAllBlogs: () => {
-      // Make a call to the database to get all the blogs i.e SELECT * FROM blogs
-      return blogs;
-    },
-    getBlogById: (parent, args) => {
-      const id = args.id;
-      return blogs.find((blog) => blog.id === Number(id));
-    },
-  },
+// const resolvers = {
+//   Query: {
+//     getAllBlogs: () => {
+//       // Make a call to the database to get all the blogs i.e SELECT * FROM blogs
+//       return blogs;
+//     },
+//     getBlogById: (parent, args) => {
+//       const id = args.id;
+//       return blogs.find((blog) => blog.id === Number(id));
+//     },
+//   },
 
-  Mutation: {
-    deleteBlog: (parent, args) => {
-      const id = Number(args.id);
-      const blogIndex = blogs.findIndex((blog) => blog.id === id);
-      if (blogIndex === -1) {
-        throw new Error("Blog not found");
-      }
-      const deletedBlog = blogs.splice(blogIndex, 1);
-      return deletedBlog[0];
-    },
+//   Mutation: {
+//     deleteBlog: (parent, args) => {
+//       const id = Number(args.id);
+//       const blogIndex = blogs.findIndex((blog) => blog.id === id);
+//       if (blogIndex === -1) {
+//         throw new Error("Blog not found");
+//       }
+//       const deletedBlog = blogs.splice(blogIndex, 1);
+//       return deletedBlog[0];
+//     },
 
-    createBlog: (parent, args) => {
-      // Destructure the args
-      const { title, description, author, ratings } = args;
-      const newBlog = {
-        id: (blogs.length + 1).toString(),
-        ...args,
-      };
-      blogs.push(newBlog);
-      return newBlog;
-    },
-  },
-};
+//     createBlog: (parent, args) => {
+//       // Destructure the args
+//       const { title, description, author, ratings } = args;
+//       const newBlog = {
+//         id: (blogs.length + 1).toString(),
+//         ...args,
+//       };
+//       blogs.push(newBlog);
+//       return newBlog;
+//     },
+//   },
+// };
 
 // Define how our data should look like, different queries that are gonna be used to get the data, and different mutations that gonna alter the data
 
 // type Task → Defines a Task object with id, text, and completed fields.
 // type Query → This is where you define queries for Task objects.
 
-// const typeDefs = gql`
+const typeDefs = gql`
 
-//   type Task {
-//     id: ID!
-//     text: String!
-//     completed: Boolean!
-//     created_at: String!
-//   }
+  type Task {
+    id: ID!
+    text: String!
+    completed: Boolean!
+    created_at: String!
+  }
 
-//   type User {
-//     id:ID!
-//     fullname: String!
-//     email:String!
-//   }
+  type User {
+    id:ID!
+    fullname: String!
+    email:String!
+  }
 
-//   type Query {
-//     getTasks: [Task]
-//     getCompletedTasks: [Task]
-//     getIncompleteTasks: [Task]
-//     searchTask(keyword: String!): Task
-//   }
+  type Query {
+    getTasks: [Task]
+    getCompletedTasks: [Task]
+    getIncompleteTasks: [Task]
+    searchTask(keyword: String!): Task
+  }
 
-//   type Mutation {
-//     addTask(text: String!): Task
-//     updateTask(id:ID!):Task
-//     completeTask(id: ID!): Task
-//     removeTask(id: ID!): Task
-//   }
-// `;
+  type Mutation {
+    addTask(text: String!): Task
+    updateTask(id:ID!):Task
+    completeTask(id: ID!): Task
+    removeTask(id: ID!): Task
+  }
+`;
 
-// const resolvers = {
-//   Query: {
-//     getTasks: () => tasks,
-//     getCompletedTasks: () => tasks.filter((task) => task.completed),
-//     getIncompleteTasks: () => tasks.filter((task) => !task.completed),
-//     searchTask: (_, { keyword }) =>
-//       tasks.filter((task) =>
-//         task.text.toLowerCase().includes(keyword.toLowerCase())
-//       ),
-//   },
-//   Mutation:{}
-// };
+const resolvers = {
+  Query: {
+    getTasks: () => tasks,
+    getCompletedTasks: () => tasks.filter((task) => task.completed),
+    getIncompleteTasks: () => tasks.filter((task) => !task.completed),
+    searchTask: (_, { keyword }) =>
+      tasks.filter((task) =>
+        task.text.toLowerCase().includes(keyword.toLowerCase())
+      ),
+  },
+  Mutation:{}
+};
 
 // Connect Apollo Server to Express
 
