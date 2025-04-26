@@ -1,9 +1,12 @@
 // graphql/resolvers.js
 
 const blogs = require("../data/blogs");
+const users = require("../data/users");
 
 const resolvers = {
   Query: {
+    getAllUsers:()=>users,
+    getUserById:(_, {id})=>users.find((user) => user.id === Number(id)),
     getAllBlogs: () => blogs,
     getBlogById: (_, { id }) => blogs.find((blog) => blog.id === Number(id)),
   },
